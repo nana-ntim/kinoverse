@@ -9,7 +9,7 @@ The heart of Kinoverse, where cinematographers share their visual stories.
 - Professional-grade display interface
 - Technical discussion space
 
-### 3. Social Features
+### 2. Social Features
 Building the cinematography community.
 - Follow system
 - Like functionality
