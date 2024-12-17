@@ -36,9 +36,6 @@ if (!$is_admin) {
                 <a href="../../pages/feed.php" class="nav-link">
                     Shots
                 </a>
-                <a href="../../pages/curations.php" class="nav-link">
-                    Curations
-                </a>
                 <a href="dashboard.php" class="nav-link admin-link active">
                     <i class="fas fa-shield-alt"></i>
                     Admin

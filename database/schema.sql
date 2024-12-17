@@ -108,6 +108,27 @@ CREATE TABLE kinoverse_admin_logs (
     INDEX idx_target_logs (target_user_id, created_at)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+CREATE TABLE kinoverse_collections (
+    collection_id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT NOT NULL,
+    name VARCHAR(100) NOT NULL,
+    description TEXT,
+    cover_image_url VARCHAR(255),
+    is_private BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES kinoverse_users(user_id) ON DELETE CASCADE
+);
+
+CREATE TABLE kinoverse_collection_items (
+    collection_id INT,
+    post_id INT,
+    added_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (collection_id, post_id),
+    FOREIGN KEY (collection_id) REFERENCES kinoverse_collections(collection_id) ON DELETE CASCADE,
+    FOREIGN KEY (post_id) REFERENCES kinoverse_posts(post_id) ON DELETE CASCADE
+);
+
 ALTER TABLE kinoverse_users
 ADD COLUMN banned_until DATETIME NULL,
 ADD COLUMN ban_reason TEXT NULL;

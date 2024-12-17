@@ -116,8 +116,11 @@ try {
             <button class="action-btn <?php echo $post['is_liked'] ? 'liked' : ''; ?>" data-action="like">
                 <i class="<?php echo $post['is_liked'] ? 'fas' : 'far'; ?> fa-heart"></i>
             </button>
-            <button class="action-btn">
+            <button class="action-btn" onclick="document.getElementById('commentInput').focus()">
                 <i class="far fa-comment"></i>
+            </button>
+            <button class="action-btn" onclick="openCollectionModal(<?php echo $post['post_id']; ?>)">
+                <i class="far fa-bookmark"></i>
             </button>
         </div>
         <div class="action-stats">
@@ -159,6 +162,24 @@ try {
     ></textarea>
     <button type="submit" class="comment-submit" disabled>Post</button>
 </form>
+
+<div class="collection-modal" id="collectionModal">
+    <div class="collection-modal-content">
+        <div class="modal-header">
+            <h3>Save to Collection</h3>
+            <button class="close-btn" onclick="closeCollectionModal()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="collection-list" id="collectionList">
+            <!-- Collections will be loaded here -->
+        </div>
+        <button class="create-collection-btn" onclick="showCreateCollection()">
+            <i class="fas fa-plus"></i>
+            Create New Collection
+        </button>
+    </div>
+</div>
 
 <?php
 } catch (Exception $e) {

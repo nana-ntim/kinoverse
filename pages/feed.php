@@ -126,15 +126,6 @@ try {
                 loadingSpinner.remove();
 
                 if (!Array.isArray(posts) || posts.length === 0) {
-                    if (page === 1) {
-                        feedMain.innerHTML = `
-                            <div class="feed-empty">
-                                <i class="far fa-images"></i>
-                                <p>No posts yet</p>
-                                <small>Follow some creators to see their posts here</small>
-                            </div>
-                        `;
-                    }
                     noMorePosts = true;
                     return;
                 }

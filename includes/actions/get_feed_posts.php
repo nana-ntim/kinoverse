@@ -11,6 +11,35 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 try {
+    // First, get suggested users who aren't followed
+    $suggestedQuery = "
+        SELECT DISTINCT 
+            u.user_id,
+            u.username,
+            u.profile_image_url,
+            u.bio,
+            (SELECT COUNT(*) FROM kinoverse_posts WHERE user_id = u.user_id) as post_count,
+            (SELECT COUNT(*) FROM kinoverse_follows WHERE following_id = u.user_id) as follower_count,
+            EXISTS(
+                SELECT 1 FROM kinoverse_follows 
+                WHERE follower_id = ? AND following_id = u.user_id
+            ) as is_following
+        FROM kinoverse_users u
+        WHERE u.user_id != ? 
+        AND u.user_id NOT IN (
+            SELECT following_id 
+            FROM kinoverse_follows 
+            WHERE follower_id = ?
+        )
+        AND EXISTS (SELECT 1 FROM kinoverse_posts WHERE user_id = u.user_id)
+        ORDER BY follower_count DESC, post_count DESC
+        LIMIT 5
+    ";
+
+    $stmt = $pdo->prepare($suggestedQuery);
+    $stmt->execute([$_SESSION['user_id'], $_SESSION['user_id'], $_SESSION['user_id']]);
+    $suggestedUsers = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
     $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
     $perPage = isset($_GET['per_page']) ? (int)$_GET['per_page'] : 10;
     $offset = ($page - 1) * $perPage;
@@ -102,6 +131,7 @@ try {
     echo json_encode([
         'success' => true,
         'posts' => $posts,
+        'suggestedUsers' => $suggestedUsers,
         'hasMore' => count($posts) === $perPage
     ]);
 

@@ -109,6 +109,16 @@ try {
             <!-- Profile Name & Bio -->
             <h1 class="profile-name"><?php echo htmlspecialchars($user['username']); ?></h1>
             
+            <!-- Add Follow Button -->
+            <?php if (isset($_SESSION['user_id']) && $_SESSION['user_id'] !== $user['user_id']): ?>
+                <button 
+                    class="follow-btn <?php echo $user['is_following'] ? 'following' : ''; ?>" 
+                    data-user-id="<?php echo $user['user_id']; ?>"
+                >
+                    <span><?php echo $user['is_following'] ? 'Following' : 'Follow'; ?></span>
+                </button>
+            <?php endif; ?>
+
             <?php if (!empty($user['bio'])): ?>
                 <p class="profile-bio"><?php echo nl2br(htmlspecialchars($user['bio'])); ?></p>
             <?php endif; ?>
@@ -132,28 +142,24 @@ try {
 
         <!-- Posts Grid -->
         <div class="posts-grid">
-            <?php if (empty($posts)): ?>
-                <div class="posts-empty">No posts yet</div>
-            <?php else: ?>
+            <?php if (!empty($posts)): ?>
                 <?php foreach ($posts as $post): ?>
                     <div class="post-item" data-post-id="<?php echo $post['post_id']; ?>">
-                        <div class="post-link" data-post-trigger>
-                            <img src="../<?php echo htmlspecialchars($post['image_url']); ?>" 
-                                alt="<?php echo htmlspecialchars($post['title']); ?>"
-                                loading="lazy"
-                                onerror="this.src='../assets/default-post.jpg'">
-                            <div class="post-overlay">
-                                <div class="post-stats">
-                                    <div class="stat">
-                                        <i class="fas fa-heart"></i>
-                                        <span><?php echo number_format($post['like_count']); ?></span>
-                                    </div>
-                                    <div class="stat">
-                                        <i class="fas fa-comment"></i>
-                                        <span><?php echo number_format($post['comment_count']); ?></span>
-                                    </div>
-                                </div>
-                            </div>
+                        <?php if ($post['user_id'] === $_SESSION['user_id']): ?>
+                            <button 
+                                class="delete-post-btn" 
+                                onclick="confirmDelete(<?php echo $post['post_id']; ?>)"
+                                title="Delete post"
+                            >
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        <?php endif; ?>
+                        <div class="post-link" onclick="openPost(<?php echo $post['post_id']; ?>)">
+                            <img 
+                                src="../<?php echo htmlspecialchars($post['image_url']); ?>" 
+                                alt="Post"
+                                onerror="this.src='../assets/default-post.jpg'"
+                            >
                         </div>
                     </div>
                 <?php endforeach; ?>
@@ -171,5 +177,108 @@ try {
     <!-- Scripts -->
     <script src="../js/post_view.js"></script>
     <script src="../js/create_post.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const followBtn = document.querySelector('.follow-btn');
+        if (followBtn) {
+            followBtn.addEventListener('click', async function() {
+                const userId = this.dataset.userId;
+                try {
+                    const response = await fetch('../includes/actions/toggle_follow.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: `user_id=${userId}`
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        // Update button state
+                        this.classList.toggle('following');
+                        this.textContent = this.classList.contains('following') ? 'Following' : 'Follow';
+                        
+                        // Update follower count - specifically target the followers stat
+                        const followerStats = document.querySelectorAll('.stat-item');
+                        followerStats.forEach(stat => {
+                            const label = stat.querySelector('.stat-label');
+                            if (label && label.textContent.toLowerCase() === 'followers') {
+                                const countElement = stat.querySelector('.stat-value');
+                                if (countElement) {
+                                    countElement.textContent = data.followerCount;
+                                }
+                            }
+                        });
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                }
+            });
+        }
+    });
+
+    let postToDelete = null;
+
+    function confirmDelete(postId) {
+        event.stopPropagation(); // Prevent the post from opening
+        postToDelete = postId;
+        document.getElementById('deleteConfirmModal').classList.add('active');
+    }
+
+    function closeDeleteModal() {
+        postToDelete = null;
+        document.getElementById('deleteConfirmModal').classList.remove('active');
+    }
+
+    function deletePost() {
+        if (!postToDelete) return;
+
+        fetch('../includes/actions/delete_post.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `post_id=${postToDelete}`
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Remove the post from the grid
+                const postElement = document.querySelector(`[data-post-id="${postToDelete}"]`);
+                if (postElement) {
+                    postElement.remove();
+                }
+                // Close the modal
+                closeDeleteModal();
+                // Show success message
+                alert('Post deleted successfully');
+                // Reload the page to update the post count
+                window.location.reload();
+            } else {
+                throw new Error(data.error || 'Failed to delete post');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert(error.message || 'Error deleting post. Please try again.');
+        })
+        .finally(() => {
+            closeDeleteModal();
+        });
+    }
+    </script>
+
+    <!-- Add this at the bottom of the page, before closing body tag -->
+    <div class="confirm-modal-overlay" id="deleteConfirmModal">
+        <div class="confirm-modal">
+            <h3>Delete Post</h3>
+            <p>Are you sure you want to delete this post? This action cannot be undone.</p>
+            <div class="confirm-modal-buttons">
+                <button class="confirm-btn cancel" onclick="closeDeleteModal()">Cancel</button>
+                <button class="confirm-btn delete" onclick="deletePost()">Delete</button>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

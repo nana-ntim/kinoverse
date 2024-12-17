@@ -30,9 +30,6 @@ if (isset($_SESSION['user_id'])) {
                 <a href="feed.php" class="nav-link <?php echo ($current_page === 'feed.php') ? 'active' : ''; ?>">
                     Shots
                 </a>
-                <a href="curations.php" class="nav-link <?php echo ($current_page === 'curations.php') ? 'active' : ''; ?>">
-                    Curations
-                </a>
                 <?php if ($is_admin): ?>
                 <a href="admin/dashboard.php" class="nav-link admin-link">
                     <i class="fas fa-shield-alt"></i>
@@ -141,7 +138,6 @@ if (isset($_SESSION['user_id'])) {
         </div>
     </div>
 </nav>
-
 <!-- Mobile Menu -->
 <?php if (isset($_SESSION['user_id'])): ?>
 <div class="nav-mobile-menu" id="navMobileMenu">

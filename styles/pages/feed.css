@@ -229,49 +229,6 @@
     color: white;
 }
 
-/* Empty state */
-.feed-empty {
-    text-align: center;
-    padding: 48px 24px;
-    color: #64748b;
-}
-
-.feed-empty i {
-    font-size: 48px;
-    margin-bottom: 16px;
-    opacity: 0.5;
-}
-
-.feed-empty p {
-    font-size: 16px;
-    margin-bottom: 8px;
-}
-
-.feed-empty small {
-    font-size: 14px;
-    opacity: 0.7;
-}
-
-/* Loading spinner */
-.loading-spinner {
-    display: flex;
-    justify-content: center;
-    padding: 24px;
-}
-
-.spinner {
-    width: 32px;
-    height: 32px;
-    border: 3px solid #e2e8f0;
-    border-top-color: #0f172a;
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
-}
-
-@keyframes spin {
-    to { transform: rotate(360deg); }
-}
-
 /* Responsive design */
 @media (max-width: 1024px) {
     .feed-container {

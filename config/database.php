@@ -1,14 +1,14 @@
 <?php
 // Database credentials
-// $host = 'localhost';
-// $dbname = 'webtech_fall2024_asamoah_ntim';
-// $dbusername = 'asamoah.ntim';
-// $dbpassword = 'Frimpomaah123#';
-
 $host = 'localhost';
-$dbname = 'kinoverse';
-$dbusername = 'root';
-$dbpassword = '';
+$dbname = 'webtech_fall2024_asamoah_ntim';
+$dbusername = 'asamoah.ntim';
+$dbpassword = 'Frimpomaah123#';
+
+// $host = 'localhost';
+// $dbname = 'kinoverse';
+// $dbusername = 'root';
+// $dbpassword = '';
 
 try {
     // Create PDO instance

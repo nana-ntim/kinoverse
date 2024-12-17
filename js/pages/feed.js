@@ -98,7 +98,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
         try {
             loading = true;
-            showLoadingSpinner();
 
             const response = await fetch(`../includes/actions/get_feed_posts.php?page=${page}&per_page=${postsPerPage}`);
             const data = await response.json();
@@ -108,9 +107,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             if (!data.posts || data.posts.length === 0) {
-                if (page === 1) {
-                    showEmptyState();
-                }
                 noMorePosts = true;
                 return;
             }
@@ -123,11 +119,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
             page++;
 
+            if (data.suggestedUsers) {
+                updateSuggestionsList(data.suggestedUsers);
+            }
+
         } catch (error) {
             console.error('Error loading posts:', error);
-            showErrorState();
         } finally {
-            hideLoadingSpinner();
             loading = false;
         }
     }
@@ -214,16 +212,6 @@ document.addEventListener('DOMContentLoaded', function() {
         if (spinner) spinner.remove();
     }
 
-    function showEmptyState() {
-        feedMain.innerHTML = `
-            <div class="feed-empty">
-                <i class="far fa-images"></i>
-                <p>No posts yet</p>
-                <small>Follow some creators to see their posts here</small>
-            </div>
-        `;
-    }
-
     function showErrorState() {
         const errorMessage = document.createElement('div');
         errorMessage.className = 'feed-error';
@@ -280,3 +268,55 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initial load
     loadMorePosts();
 });
+
+function updateSuggestionsList(suggestedUsers) {
+    const suggestionList = document.querySelector('.suggestion-list');
+    if (!suggestionList || !suggestedUsers.length) return;
+
+    suggestionList.innerHTML = suggestedUsers.map(user => `
+        <div class="suggestion-item">
+            <img 
+                src="../${user.profile_image_url || 'assets/default-avatar.jpg'}" 
+                alt="${user.username}'s profile" 
+                class="suggestion-avatar"
+                onerror="this.src='../assets/default-avatar.jpg'"
+                onclick="window.location.href='profile.php?username=${user.username}'"
+            >
+            <div class="suggestion-info" onclick="window.location.href='profile.php?username=${user.username}'">
+                <div class="suggestion-name">${user.username}</div>
+                ${user.bio ? `<div class="suggestion-bio">${user.bio}</div>` : ''}
+            </div>
+            <button 
+                class="follow-btn ${user.is_following ? 'following' : ''}" 
+                data-user-id="${user.user_id}"
+            >
+                ${user.is_following ? 'Following' : 'Follow'}
+            </button>
+        </div>
+    `).join('');
+
+    // Add event listeners for follow buttons
+    document.querySelectorAll('.suggestion-list .follow-btn').forEach(btn => {
+        btn.addEventListener('click', async function() {
+            const userId = this.dataset.userId;
+            try {
+                const response = await fetch('../includes/actions/toggle_follow.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `user_id=${userId}`
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    this.classList.toggle('following');
+                    this.textContent = this.classList.contains('following') ? 'Following' : 'Follow';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        });
+    });
+}

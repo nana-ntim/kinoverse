@@ -258,8 +258,11 @@ function formatNumber($num) {
 
     <script>
     function exportReport() {
-        // Implementation for report export
-        alert('Exporting report...');
+        // Get current date for filename
+        const date = new Date().toISOString().split('T')[0];
+        
+        // Redirect to export script
+        window.location.href = '../../includes/actions/export_posts.php?type=dashboard&date=' + date;
     }
 
     function viewUser(userId) {

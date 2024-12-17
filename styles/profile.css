@@ -302,3 +302,179 @@ body{
         right: 24px;
     }
 }
+
+/* Follow Button Styles */
+.follow-btn {
+    background: #e2e8f0;
+    color: #0f172a;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin: 16px 0;
+    min-width: 120px;
+    position: relative;
+}
+
+.follow-btn:hover {
+    background: #cbd5e1;
+}
+
+.follow-btn.following {
+    background: #0f172a;
+    color: white;
+}
+
+.follow-btn.following:hover {
+    background: #ef4444;
+}
+
+/* Text handling */
+.follow-btn span {
+    display: inline-block;
+    transition: opacity 0.2s ease;
+}
+
+.follow-btn.following span {
+    opacity: 0;
+}
+
+.follow-btn.following::after {
+    content: "Following";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.follow-btn.following:hover::after {
+    content: "Unfollow";
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .follow-btn {
+        padding: 10px 20px;
+        font-size: 13px;
+        min-width: 100px;
+    }
+}
+
+/* Delete Post Button */
+.delete-post-btn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(239, 68, 68, 0.9);
+    color: white;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    opacity: 0;
+    transform: translateY(5px);
+    transition: all 0.3s ease;
+    z-index: 5;
+}
+
+.post-item:hover .delete-post-btn {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.delete-post-btn:hover {
+    background: rgba(220, 38, 38, 1);
+    transform: translateY(-2px);
+}
+
+/* Confirmation Modal */
+.confirm-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.confirm-modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.confirm-modal {
+    background: white;
+    padding: 24px;
+    border-radius: 16px;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+}
+
+.confirm-modal-overlay.active .confirm-modal {
+    transform: translateY(0);
+}
+
+.confirm-modal h3 {
+    margin: 0 0 16px;
+    color: #121212;
+    font-size: 20px;
+}
+
+.confirm-modal p {
+    margin: 0 0 24px;
+    color: #666666;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.confirm-modal-buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+.confirm-btn {
+    padding: 10px 24px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.confirm-btn.cancel {
+    background: #e2e8f0;
+    color: #0f172a;
+}
+
+.confirm-btn.cancel:hover {
+    background: #cbd5e1;
+}
+
+.confirm-btn.delete {
+    background: #ef4444;
+    color: white;
+}
+
+.confirm-btn.delete:hover {
+    background: #dc2626;
+}
