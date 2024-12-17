@@ -1,0 +1,46 @@
+@font-face {
+  font-family: "Kaftan";
+  src: url("Kaftan.otf");
+}
+
+@font-face {
+  font-family: "Product Sans";
+  src: url("Product Sans Regular.ttf");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Product Sans";
+  src: url("ProductSans-Light.ttf");
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Product Sans";
+  src: url("ProductSans-Thin.ttf");
+  font-weight: 100;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Product Sans";
+  src: url("ProductSans-Medium.ttf");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Product Sans";
+  src: url("ProductSans-Bold.ttf");
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Product Sans";
+  src: url("ProductSans-Black.ttf");
+  font-weight: 900;
+  font-style: normal;
+}

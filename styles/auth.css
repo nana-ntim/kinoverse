@@ -1,0 +1,367 @@
+@import '../fonts/fonts.css';
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Product Sans', sans-serif;
+}
+
+:root {
+    --bg-primary: #F5F4F2;
+    --bg-secondary: #F5F4F2;
+    --text-primary: #121212;
+    --text-secondary: #666666;
+    --accent: #121212;
+    --accent-hover: #2A2A2A;
+    --border: #e2e2e3;
+    --input-bg: #F5F4F2;
+    --error: #ef4444;
+    --success: #10b981;
+    --logo: "Kaftan";
+}
+
+body {
+    min-height: 100vh;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    overflow-x: hidden;
+}
+
+.signup-container {
+    display: flex;
+    min-height: 100vh;
+    width: 100%;
+    position: relative;
+}
+
+.form-section {
+    flex: 1;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    max-width: 600px;
+    background-color: var(--bg-primary);
+    position: relative;
+    overflow: auto;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-family: var(--logo);
+    margin-bottom: 3rem;
+}
+
+.form-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 440px;
+    margin: 0 auto;
+    width: 100%;
+    padding-bottom: 2rem;
+}
+
+h1 {
+    font-size: 2.5rem;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.subtitle {
+    color: var(--text-secondary);
+    font-size: 1.125rem;
+    margin-bottom: 2.5rem;
+}
+
+.signup-form {
+    width: 100%;
+}
+
+.form-row {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.form-group {
+    flex: 1;
+    margin-bottom: 1.5rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+    font-weight: 500;
+    font-size: 0.9375rem;
+}
+
+input {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+    background: var(--input-bg);
+    color: var(--text-primary);
+}
+
+input::placeholder {
+    color: var(--text-secondary);
+}
+
+input:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(18, 18, 18, 0.1);
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 1rem;
+    background: var(--accent);
+    color: #FFFFFF;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-top: 1rem;
+}
+
+.submit-btn:hover {
+    background: var(--accent-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(18, 18, 18, 0.15);
+}
+
+.submit-btn:active {
+    transform: translateY(0);
+}
+
+.image-section {
+    flex: 1.2;
+    display: none;
+    position: fixed; /* Change to fixed */
+    right: 0; /* Position from right */
+    top: 0;
+    height: 100vh;
+    width: calc(100% - 600px); /* Calculate remaining width */
+    overflow: hidden;
+}
+
+.image-section img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+/* Glassmorphism effect for form inputs */
+.form-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    backdrop-filter: blur(10px);
+    z-index: -1;
+}
+
+.login-link {
+    text-align: center;
+    margin-top: 1.5rem;
+    font-size: 0.9375rem;
+}
+
+.login-link p {
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.login-link a {
+    color: #807f7f;
+    text-decoration: none;
+    font-weight: 500;
+    margin-left: 0.5rem;
+    transition: color 0.2s ease;
+}
+
+.login-link a:hover {
+    color: #b8b6b6;
+}
+
+/* Error and Success Containers */
+.error-container,
+.success-container {
+    margin: 1rem 0 2rem;
+    padding: 1rem;
+    border-radius: 8px;
+    width: 100%;
+}
+
+.error-container {
+    background-color: rgba(239, 68, 68, 0.1);
+    border: 1px solid var(--error);
+}
+
+.success-container {
+    background-color: rgba(16, 185, 129, 0.1);
+    border: 1px solid var(--success);
+}
+
+.error-container h3 {
+    color: var(--error);
+    font-size: 0.875rem;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.error-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.error-item {
+    color: var(--error);
+    font-size: 0.875rem;
+    padding: 0.25rem 0;
+    display: flex;
+    align-items: center;
+}
+
+.error-item:before {
+    content: "•";
+    margin-right: 0.5rem;
+}
+
+.success-message {
+    color: var(--success);
+    font-size: 0.875rem;
+    text-align: center;
+    font-weight: 500;
+}
+
+/* Password input container */
+.password-field {
+    position: relative;
+    width: 100%;
+}
+
+/* Eye icon button */
+.password-toggle {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-secondary);
+    transition: color 0.2s ease;
+}
+
+.password-toggle:hover {
+    color: var(--text-primary);
+}
+
+/* Adjust password input padding */
+.password-field input[type="password"],
+.password-field input[type="text"] {
+    padding-right: 3rem;
+}
+
+/* Animation for messages */
+.error-container,
+.success-container {
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsive Design */
+@media (min-width: 1024px) {
+    .image-section {
+        display: block;
+    }
+
+    .form-section {
+        padding: 3rem;
+    }
+}
+
+@media (max-width: 1024px) {
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .form-section {
+        max-width: 100%;
+        padding: 1.5rem;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    .subtitle {
+        font-size: 1rem;
+    }
+}
+
+/* Custom scrollbar for Webkit browsers */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--text-secondary);
+}
+
+/* Smooth scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Autofill styles */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+    -webkit-text-fill-color: var(--text-primary);
+    -webkit-box-shadow: 0 0 0px 1000px var(--input-bg) inset;
+    transition: background-color 5000s ease-in-out 0s;
+}

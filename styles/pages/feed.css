@@ -1,0 +1,339 @@
+/* Feed container and layout */
+.feed-container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 90px 24px 24px;
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 40px;
+    min-height: 100vh;
+}
+
+/* Main feed area */
+.feed-main {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+/* Post card styling */
+.social-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.2s ease;
+}
+
+/* Profile header section */
+.profile-header {
+    display: flex;
+    align-items: center;
+    padding: 16px;
+    gap: 12px;
+}
+
+.profile-image {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    cursor: pointer;
+}
+
+.profile-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.profile-name {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-weight: 500;
+    font-size: 14px;
+    color: #0f172a;
+    cursor: pointer;
+}
+
+.verified-badge {
+    color: #3b82f6;
+    font-size: 14px;
+}
+
+.followers {
+    font-size: 13px;
+    color: #64748b;
+}
+
+/* Post image container */
+.post-image-container {
+    position: relative;
+    cursor: pointer;
+    background: #f8fafc;
+    width: 100%;
+}
+
+.post-image {
+    width: 100%;
+    display: block;
+    object-fit: cover;
+}
+
+/* Engagement section */
+.engagement {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    gap: 20px;
+}
+
+.engagement-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #64748b;
+    font-size: 14px;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.engagement-item i {
+    font-size: 20px;
+    transition: all 0.2s ease;
+}
+
+.engagement-item:hover {
+    color: #0f172a;
+}
+
+.engagement-item.liked {
+    color: #ec4899;
+}
+
+.engagement-item.liked i {
+    transform: scale(1.1);
+}
+
+.engagement-item.bookmarked {
+    color: #0f172a;
+}
+
+/* Content section */
+.content {
+    padding: 0 16px 16px;
+    color: #0f172a;
+}
+
+.content p {
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 8px;
+}
+
+.content p:last-child {
+    margin-bottom: 0;
+}
+
+/* View comments link */
+.view-comments {
+    color: #64748b;
+    font-size: 14px;
+    cursor: pointer;
+    margin-top: 8px;
+}
+
+.view-comments:hover {
+    color: #0f172a;
+}
+
+/* Suggestions section */
+.suggestions-section {
+    position: sticky;
+    top: 90px;
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    height: fit-content;
+}
+
+.suggestions-header {
+    font-size: 16px;
+    font-weight: 600;
+    color: #0f172a;
+    margin-bottom: 20px;
+}
+
+.suggestion-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.suggestion-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.suggestion-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    cursor: pointer;
+}
+
+.suggestion-info {
+    flex: 1;
+    min-width: 0;
+    cursor: pointer;
+}
+
+.suggestion-name {
+    font-weight: 500;
+    color: #0f172a;
+    font-size: 14px;
+    margin-bottom: 2px;
+}
+
+.suggestion-bio {
+    color: #64748b;
+    font-size: 13px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.follow-btn {
+    background: #f1f5f9;
+    color: #0f172a;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.follow-btn:hover {
+    background: #e2e8f0;
+}
+
+.follow-btn.following {
+    background: #0f172a;
+    color: white;
+}
+
+/* Empty state */
+.feed-empty {
+    text-align: center;
+    padding: 48px 24px;
+    color: #64748b;
+}
+
+.feed-empty i {
+    font-size: 48px;
+    margin-bottom: 16px;
+    opacity: 0.5;
+}
+
+.feed-empty p {
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+
+.feed-empty small {
+    font-size: 14px;
+    opacity: 0.7;
+}
+
+/* Loading spinner */
+.loading-spinner {
+    display: flex;
+    justify-content: center;
+    padding: 24px;
+}
+
+.spinner {
+    width: 32px;
+    height: 32px;
+    border: 3px solid #e2e8f0;
+    border-top-color: #0f172a;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Responsive design */
+@media (max-width: 1024px) {
+    .feed-container {
+        grid-template-columns: 1fr;
+    }
+
+    .suggestions-section {
+        display: none;
+    }
+}
+
+@media (max-width: 640px) {
+    .feed-container {
+        padding: 72px 16px 16px;
+    }
+
+    .social-card {
+        border-radius: 0;
+        margin: 0 -16px;
+    }
+}
+
+
+.follow-btn {
+    background: #f1f5f9;
+    color: #0f172a;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-width: 80px;
+}
+
+.follow-btn:hover {
+    background: #e2e8f0;
+}
+
+.follow-btn.following {
+    background: #0f172a;
+    color: white;
+}
+
+.follow-btn.following:hover {
+    background: #ef4444;
+}
+
+.follow-btn.following:hover:before {
+    content: "Unfollow";
+}
+
+.follow-btn.following:hover span {
+    display: none;
+}
+
+/* Make sure the suggestion items are properly clickable */
+.suggestion-info {
+    cursor: pointer;
+}
+
+.suggestion-avatar {
+    cursor: pointer;
+}
