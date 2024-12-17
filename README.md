@@ -9,13 +9,6 @@ The heart of Kinoverse, where cinematographers share their visual stories.
 - Professional-grade display interface
 - Technical discussion space
 
-### 2. Collections & Boards
-Personal and professional curation of cinematographic excellence.
-- Create themed collections
-- Organize reference materials
-- Share curated boards
-- Private collection options
-
 ### 3. Social Features
 Building the cinematography community.
 - Follow system
